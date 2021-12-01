@@ -1,0 +1,15 @@
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  Exclude:
+    - '*.txt'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Lint/NumberConversion:
+  Enabled: false
+
+Style/Copyright:
+  Notice: ''
+  AutocorrectNotice: ''  

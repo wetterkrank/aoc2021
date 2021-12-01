@@ -3,7 +3,6 @@
 
 data = ::File.open('aoc01_input.txt').read.lines(chomp: true).map(&:to_i)
 
-count = 0
-data.each_cons(2) { |(previous, current)| count += 1 if current > previous }
+count = data.each_cons(2).count { |(previous, current)| current > previous }
 
 puts count

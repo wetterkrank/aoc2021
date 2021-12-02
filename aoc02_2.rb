@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/2
-# Steer submarine using directions X, Y and AIM
+# Steer submarine using directions X, Y, and AIM
 
 data = ::File.open('aoc02_input.txt').read.lines(chomp: true)
 

@@ -3,6 +3,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - '*.txt'
+    - '*.md'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

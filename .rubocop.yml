@@ -8,6 +8,9 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/TopLevelMethodDefinition:
+  Enabled: false
+
 Lint/NumberConversion:
   Enabled: false
 

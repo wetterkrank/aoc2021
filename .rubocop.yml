@@ -8,11 +8,48 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/EmptyMethod:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
 Style/TopLevelMethodDefinition:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/ImplicitRuntimeError:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Layout/SingleLineBlockChain:
+  Enabled: false
+
+Layout/MultilineAssignmentLayout:
+  Enabled: false
+
+Layout/TrailingWhitespace:
   Enabled: false
 
 Lint/NumberConversion:
   Enabled: false
+
+Lint/ConstantResolution:
+  Enabled: false
+
+Lint/UselessMethodDefinition:
+  Enabled: false
+
 
 Style/Copyright:
   Notice: ''

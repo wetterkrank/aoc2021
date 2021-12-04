@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/4
-# Bingo game with a giant squid
+# Giant Squid: checking if the array of drawn numbers intersects with Bingo board arrays
 
 require_relative 'common'
 
@@ -15,7 +15,6 @@ class Day4 < AdventDay
       winner = input[:boards].find { |board| bingo?(board, draw) }
       return number * (winner.flatten - draw).sum if winner
     end
-    # nil
   end
 
   def second_part
@@ -26,11 +25,11 @@ class Day4 < AdventDay
       winners, boards = boards.partition { |board| bingo?(board, draw) }
       return number * (winners.last.flatten - draw).sum if boards.count.zero?
     end
-    # nil
   end
 
   private
 
+  # Let's the store the boards as 2D arrays; this way we can use #transpose to check rows and columns for bingo
   def convert_data(data)
     data = data.split("\n\n")
     {

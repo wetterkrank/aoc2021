@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/1
-# Count times when next depth measurement is larger than the previous
+# Sonar Sweep: count times when the measured depth increases
 
 require_relative 'common'
 

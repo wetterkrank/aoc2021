@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/2
-# Steer submarine using directions X, Y
+# Dive! Steering a submarine (day 1: X, Y // day 2: X, Y, aim)
 
 require_relative 'common'
 

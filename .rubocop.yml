@@ -5,6 +5,16 @@ AllCops:
     - '*.txt'
     - '*.md'
 
+Lint/NumberConversion:
+  Enabled: false
+
+Lint/ConstantResolution:
+  Enabled: false
+
+Lint/UselessMethodDefinition:
+  Enabled: false
+
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
@@ -26,6 +36,17 @@ Style/ImplicitRuntimeError:
 Style/MethodCallWithArgsParentheses:
   Enabled: false
 
+Style/MissingElse:
+  Enabled: false
+
+Style/InlineComment:
+  Enabled: false
+
+Style/Copyright:
+  Notice: ''
+  AutocorrectNotice: ''  
+
+
 Metrics/AbcSize:
   Enabled: false
 
@@ -40,17 +61,3 @@ Layout/MultilineAssignmentLayout:
 
 Layout/TrailingWhitespace:
   Enabled: false
-
-Lint/NumberConversion:
-  Enabled: false
-
-Lint/ConstantResolution:
-  Enabled: false
-
-Lint/UselessMethodDefinition:
-  Enabled: false
-
-
-Style/Copyright:
-  Notice: ''
-  AutocorrectNotice: ''  

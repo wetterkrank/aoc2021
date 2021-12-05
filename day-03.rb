@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/3
-# Binary diagnostics: narrowing down the list of values according to the mode of the most significant bit
+# Binary Diagnostic: narrowing down the list of values according to the mode of the most significant bit
 
 require_relative 'common'
 

@@ -10,15 +10,15 @@ class Day5 < AdventDay
   end
 
   def second_part
-    dots = lines2dots(input, diagonals: true)
+    dots = lines2dots(input, include_diagonals: true)
     count_2d_hash_values(dots) { |x| x >= 2 }
   end
 
-  def line(coords, diagonals)
+  def line(coords, include_diagonals)
     x1, x2, y1, y2 = coords.values_at(:x1, :x2, :y1, :y2)
     dx = x2 - x1 # delta x with sign, can be 0
     dy = y2 - y1 # delta y with sign, can be 0
-    return unless (dx.zero? || dy.zero?) || (diagonals && dx.abs == dy.abs)
+    return unless (dx.zero? || dy.zero?) || (include_diagonals && dx.abs == dy.abs)
     
     length = [dx.abs, dy.abs].max + 1
     a = dx <=> 0 # -1, 0, +1
@@ -26,10 +26,10 @@ class Day5 < AdventDay
     length.times.map { |t| [x1 + (a * t), y1 + (b * t)] }
   end
 
-  def lines2dots(data, diagonals: false)
+  def lines2dots(data, include_diagonals: false)
     init = Hash.new { |hash, key| hash[key] = Hash.new { |h, k| h[k] = 0 } }
     data.each_with_object(init) do |coords, obj|
-      line(coords, diagonals)&.each { |(x, y)| obj[y][x] += 1 }
+      line(coords, include_diagonals)&.each { |(x, y)| obj[y][x] += 1 }
     end
   end
 

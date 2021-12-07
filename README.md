@@ -1,5 +1,5 @@
 # advent-of-code-2021
-[Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Thanks to [`@Aquaj`](https://github.com/Aquaj) for the handy Ruby framework.
+My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Thanks to [`@Aquaj`](https://github.com/Aquaj) for the handy Ruby framework.
 
 ## Notes to self
 

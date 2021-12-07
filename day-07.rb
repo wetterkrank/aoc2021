@@ -5,7 +5,7 @@ require_relative 'common'
 
 class Day7 < AdventDay
   def min_cost(&block)
-    costs = (input.min..input.max).map { |pos| input.reduce(0) { |acc, elem| acc + yield(elem, pos) } }
+    costs = input.map { |pos| input.reduce(0) { |acc, elem| acc + yield(elem, pos) } }
     costs.min
   end
 

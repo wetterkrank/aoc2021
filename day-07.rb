@@ -4,21 +4,17 @@
 require_relative 'common'
 
 class Day7 < AdventDay
+  def min_cost(&block)
+    costs = (input.min..input.max).map { |pos| input.reduce(0) { |acc, elem| acc + yield(elem, pos) } }
+    costs.min
+  end
+
   def first_part
-    distances = (input.min..input.max).map do |pos| 
-      input.reduce(0) { |acc, elem| acc + (elem - pos).abs }
-    end
-    distances.min
+    min_cost { |a, b| (a - b).abs }
   end
 
   def second_part
-    distances = (input.min..input.max).map do |pos|
-      input.reduce(0) do |acc, elem|
-        n = (elem - pos).abs
-        acc + (((1 + n) * n) / 2)
-      end
-    end
-    distances.min
+    min_cost { |a, b| ((1 + (a - b).abs) * (a - b).abs) / 2 }
   end
 
   private

@@ -18,7 +18,8 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 - Alternative approach: calculate the result for each input entry; use Hash to cache the result for the same age
 
 #### [Day 7: The Treachery of Whales](https://adventofcode.com/2021/day/7)
-- Used arithmetic series formula
+- Used [arithmetic series formula](https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF)
+- However, there's a better approach: the optimal position is the _median_ ([the value with the lowest absolute distance to the data](https://en.wikipedia.org/wiki/Median#Optimality_property)) in part 1, and the _mean_ in part 2
 
 
 ## Running the code

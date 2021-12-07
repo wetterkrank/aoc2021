@@ -4,15 +4,22 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 ## Notes to self
 
 #### [Day 2: Dive!](https://adventofcode.com/2021/day/2)
-Use `else` in the `case` statement, it can save some debugging time if the input gets messed up.
+- Using `else` in a `case` statement can save some debugging time if the input gets messed up
 
 #### [Day 3: Binary Diagnostic](https://adventofcode.com/2021/day/3)
-Sorting the input actually seems like a good idea. Should give it a try!
+- Sorting the input actually seems like a good idea. Should give it a try!
 
 #### [Day 5: Hydrothermal Venture](https://adventofcode.com/2021/day/5)
 - Used spaceship operator to turn a number into +1/0/-1
 - Reused self-creating Hash from [last year](https://github.com/wetterkrank/aoc2020/blob/master/aoc17_1.rb)
 - Looking at Wikipedia [Line article](https://en.wikipedia.org/wiki/Line_(geometry)) was helpful
+
+#### [Day 6: Lanternfish](https://adventofcode.com/2021/day/6)
+- Alternative approach: calculate the result for each input entry; use Hash to cache the result for the same age
+
+#### [Day 7: The Treachery of Whales](https://adventofcode.com/2021/day/7)
+- Used arithmetic series formula
+
 
 ## Running the code
 

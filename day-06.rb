@@ -1,5 +1,5 @@
 # https://adventofcode.com/2021/day/6
-# Lanternfish: sum up aggregated values (age group total) intead of counting individual ones (fish age)
+# Lanternfish: sum up aggregated values (age group total) intead of counting individual ones
 
 require_relative 'common'
 

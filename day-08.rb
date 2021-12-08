@@ -1,3 +1,6 @@
+# https://adventofcode.com/2021/day/8
+# Seven Segment Search
+
 require_relative 'common'
 
 class Day8 < AdventDay
@@ -17,6 +20,7 @@ class Day8 < AdventDay
     
     # 1, 4, 7, 8
     digits = get_unique_digits(all_digits)
+
     digits[2] = digits[8] - b - f
     digits[3] = digits[8] - b - e
     digits[9] = digits[8] - e

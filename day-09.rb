@@ -16,7 +16,7 @@ class Day9 < AdventDay
     end
   end
 
-  # recursively walks the surrounding cells except those in .reject; nils all visited cells
+  # recursively walks the surrounding cells except borders; nils all visited cells
   def map_nbrhood(grid, current)
     y, x = current.values_at(:y, :x)
     return 0 if grid[y][x].nil?

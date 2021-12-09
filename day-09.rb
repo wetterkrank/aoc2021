@@ -7,12 +7,12 @@ class Day9 < AdventDay
   DIRS = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 
   # gets cell neighbours in DIRS directions, returns object { h: cell_value, x: ..., y: ... }
-  def neighbours(grid, y, x)
+  def neighbours(grid, y, x, except: nil)
     DIRS.each_with_object([]) do |(dy, dx), list| 
       xn = x + dx
       yn = y + dy
       nbr = xn >= 0 && yn >= 0 ? grid.dig(yn, xn) : nil # mind those negative array indices in Ruby
-      list << { h: nbr, y: yn, x: xn } unless nbr.nil?
+      list << { h: nbr, y: yn, x: xn } unless nbr.nil? || nbr == except
     end
   end
 
@@ -21,8 +21,7 @@ class Day9 < AdventDay
     y, x = current.values_at(:y, :x)
     return 0 if grid[y][x].nil?
 
-    nbrs = neighbours(grid, y, x)
-    nbrs = nbrs.reject { |nbr| nbr[:h] == 9 }
+    nbrs = neighbours(grid, y, x, except: 9)
     grid[y][x] = nil
     return 1 if nbrs.empty?
 

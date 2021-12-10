@@ -29,10 +29,9 @@ class Day9 < AdventDay
   end
 
   def first_part
-    grid = input.dup
-    grid.each_with_index.sum do |row, y|
+    input.each_with_index.sum do |row, y|
       row.each_with_index.sum do |point, x|
-        nbrs = neighbours(grid, y, x)
+        nbrs = neighbours(input, y, x)
         nbrs.all? { |nbr| nbr[:h] > point } ? point + 1 : 0
       end
     end

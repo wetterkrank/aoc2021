@@ -14,6 +14,12 @@ Lint/ConstantResolution:
 Lint/UselessMethodDefinition:
   Enabled: false
 
+Style/StringHashKeys:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
 Style/ConstantVisibility:
   Enabled: false
 
@@ -21,6 +27,12 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/EmptyMethod:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
 Style/Documentation:

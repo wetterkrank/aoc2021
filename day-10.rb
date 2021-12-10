@@ -4,7 +4,6 @@
 require_relative 'common'
 
 OPENING = { '(' => ')', '[' => ']', '{' => '}', '<' => '>' }
-PAIRS = OPENING.to_a.map(&:join)
 
 class Day10 < AdventDay
   def corrupted_bracket(line)

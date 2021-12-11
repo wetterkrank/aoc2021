@@ -37,7 +37,6 @@ class Day10 < AdventDay
       nil until line.gsub!(/\[\]|\(\)|\{\}|\<\>/, '').nil?
       list << line.reverse.chars.map { |ch| OPENING[ch] }.join
     end
-
     scores = completions.map { |str| str.chars.reduce(0) { |acc, elem| (acc * 5) + points[elem] } }
     scores.sort[scores.length / 2]
   end

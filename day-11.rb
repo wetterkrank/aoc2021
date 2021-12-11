@@ -6,11 +6,12 @@ require_relative 'common'
 DIRS = [-1, 0, 1].repeated_permutation(2).to_a
 
 class Day11 < AdventDay
-  def cycle(grid)
+  def cycle(grid, step: nil)
     y = grid.size
     x = grid.first.size
     y.times { |j| x.times { |i| grid[j][i] += 1 } }
     y.times { |j| x.times { |i| flash(grid, j, i) } }
+    return step + 1 if step
   end
 
   def count_flashes(grid)
@@ -42,12 +43,10 @@ class Day11 < AdventDay
   def second_part
     grid = input
 
-    step = 0
-    until count_flashes(grid) == 100
-      step += 1
+    (1..).find do 
       cycle(grid)
+      count_flashes(grid) == 100
     end
-    step
   end
 
   private

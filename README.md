@@ -21,6 +21,10 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 - Used [arithmetic series formula](https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF)
 - However, there's a better approach: the optimal position is the _median_ ([the value with the lowest absolute distance to the data](https://en.wikipedia.org/wiki/Median#Optimality_property)) in part 1, and the _mean_ in part 2
 
+#### [Day 9: Smoke Basins](https://adventofcode.com/2021/day/9)
+- Used what I guess is called flood fill algorithm
+- Got tripped by Ruby's negative array indices (expected `nil`)
+- And (more than once) by counting the previously visited cells in a recursive walkaround
 
 ## Running the code
 

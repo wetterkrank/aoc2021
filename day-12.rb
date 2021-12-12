@@ -9,8 +9,8 @@ class Day12 < AdventDay
   end
   
   def second_part
-    # Extra condition -- allow only one "small" cave visited twice
-    constraint = ->(node, path) { path[node] == 1 && path.values.none? { |val| val == 2 } }
+    # Extra condition -- only one "small" cave can be visited twice
+    constraint = ->(node, visited) { visited[node] == 1 && visited.values.none?(2) }
     count_paths(input, 'start', {}, constraint)
   end
 
@@ -22,8 +22,10 @@ class Day12 < AdventDay
 
   def count_paths(adj, curr, visited, constraint = nil)
     return 1 if curr == 'end'
-
+    
+    # Tracking only small caves since we don't need to know the whole path
     visited[curr] = visited[curr].nil? ? 1 : visited[curr] + 1 unless big?(curr)
+
     # Allow big caves and small caves not visited yet + extra condition if given
     next_nodes = adj[curr].filter do |node|
       node != 'start' && (visited[node].nil? || big?(node) || constraint&.call(node, visited))

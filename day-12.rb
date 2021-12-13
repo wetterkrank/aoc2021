@@ -17,20 +17,22 @@ class Day12 < AdventDay
   private
 
   def big?(node)
-    node.chars.first <= 'Z'
+    node[0] <= 'Z'
   end
 
-  def count_paths(adj, curr, visited, constraint = nil)
+  def count_paths(a_list, curr, visited, constraint = nil)
     return 1 if curr == 'end'
     
     # Tracking only small caves since we don't need to know the whole path
-    visited[curr] = visited[curr].nil? ? 1 : visited[curr] + 1 unless big?(curr)
+    unless big?(curr)
+      visited[curr] = visited[curr].nil? ? 1 : visited[curr] + 1
+    end
 
     # Allow big caves and small caves not visited yet + extra condition if given
-    next_nodes = adj[curr].filter do |node|
+    next_nodes = a_list[curr].filter do |node|
       node != 'start' && (visited[node].nil? || big?(node) || constraint&.call(node, visited))
     end
-    next_nodes.sum { |node| count_paths(adj, node, visited.dup, constraint) }
+    next_nodes.sum { |node| count_paths(a_list, node, visited.dup, constraint) }
   end
 
   def convert_data(data)

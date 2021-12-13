@@ -16,25 +16,23 @@ class Day13 < AdventDay
   end
 
   private
+  
+  def fold(sheet, (axis, fold))
+    sheet.map do |coords|
+      n = coords[axis]
+      coords[axis] = n < fold ? n : (2 * fold) - n
+      coords
+    end.uniq
+  end
 
   def convert_data(data)
     coords, instructions = data.split("\n\n")
     [
-      coords.lines(chomp: true).map { _1.split(',') }.map { |x, y| [x.to_i, y.to_i] },
-      instructions.lines(chomp: true).map { _1.gsub('fold along ', '').split('=') }
-                  .map { |ax, str| [ax, str.to_i] }
+      coords.lines(chomp: true).map { _1.split(',') }.map { _1.map(&:to_i) },
+      instructions.lines(chomp: true)
+                  .map { _1.split.last.split('=') }
+                  .map { |ax, str| [ax == 'x' ? 0 : 1, str.to_i] }
     ]    
-  end
-
-  def fold(sheet, (axis, fold))
-    sheet.map do |x, y|
-      if axis == 'y'
-        y = y < fold ? y : y - (2 * (y - fold))
-      else
-        x = x < fold ? x : x - (2 * (x - fold))
-      end
-      [x, y]
-    end.uniq
   end
 
   def pretty_print(grid)

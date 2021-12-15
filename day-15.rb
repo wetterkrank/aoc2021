@@ -1,53 +1,67 @@
-require 'colorize'
+# https://adventofcode.com/2021/day/15
+# Chiton -- finding the shortest path in a graph
+
 require_relative 'common'
 
-DIRS = [[-1, 0], [0, 1], [1, 0], [0, -1]] # clockwise
-# DIRS = [[0, 1], [1, 0]] # right and down only
+DIRS = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
 class Day15 < AdventDay
   def first_part
     grid, dims = input.dup
-    start = [0, 0]
-    target = [dims[0] - 1, dims[1] - 1]
+    shortest_path(grid, dims)
+  end
 
-    infinity = dims[0] * dims[1] * 9
-    distances = grid.dup.transform_values { |_v| infinity }
-    distances[start] = 0
-    queue = Set.new(grid.keys)
+  def second_part
+    grid, dims = supersize
+    shortest_path(grid, dims)
+  end
+
+  def shortest_path(grid, dimensions)
+    target = [dimensions.first - 1, dimensions.last - 1]
+    start = [0, 0]
+
+    distances = { start => 0 }
+    queue = Set.new([start])
     current = start
 
-    until current == target || queue.empty?
-      nbrs = get_adjacent(current, queue) # get all still unvisited neigbours
-
+    until queue.empty?
+      nbrs = get_adjacent(current, grid)
       nbrs.each do |nbr|
-        distance = distances[current] + grid[nbr] # calc distances through current node
-        distances[nbr] = [distances[nbr], distance].min # update distance for each if it's smaller than recorded
-      end
-
+        alt = distances[current] + grid[nbr]
+        if distances[nbr].nil? || distances[nbr] > alt
+          distances[nbr] = alt
+          queue << nbr
+        end
+      end  
       queue.delete(current)
-      next_node = queue.min_by { |k| distances[k] } # select node with the smallest distance from the queue
-      current = next_node
+      current = queue.first
     end
+
     distances[target]
   end
 
-  def get_adjacent(position, queue)
+  def get_adjacent(position, grid)
     y, x = position
     nbrs = DIRS.map { |dy, dx| [y + dy, x + dx] }
-    nbrs.filter { |point| queue === point }
+    nbrs.reject { |nbr| grid[nbr].nil? }
+  end
+
+  def supersize(factor = 5)
+    grid, dims = input.dup
+    dim_y, dim_x = dims
+    megagrid = {}
+    factor.times do |j|
+      factor.times do |i|
+        grid.each_entry do |(y, x), v|
+          nv = (v + i + j) > 9 ? (v + i + j) % 9 : v + i + j
+          megagrid[[y + (dim_y * j), x + (dim_x * i)]] = nv
+        end
+      end
+    end
+    [megagrid, [dim_y * factor, dim_x * factor]]
   end
 
   private
-
-  def pretty_print(grid, dims, path = {})
-    y, x = dims
-    y.times do |y|
-      x.times do |x|
-        print grid[[y, x]].to_s.colorize(color: path.key?([y, x]) ? :red : :light_black)
-      end
-      puts
-    end
-  end
 
   def convert_data(data)
     space = {}
@@ -58,9 +72,6 @@ class Day15 < AdventDay
     end
     [space, [super.size, super.first.size]]
   end
-end
-
-def second_part
 end
 
 Day15.solve

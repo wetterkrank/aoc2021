@@ -29,7 +29,7 @@ class Day4 < AdventDay
 
   private
 
-  # Let's the store the boards as 2D arrays; this way we can use #transpose to check rows and columns for bingo
+  # Let's store the boards as 2D arrays; this way we can use #transpose to check rows and columns for bingo
   def convert_data(data)
     data = data.split("\n\n")
     {

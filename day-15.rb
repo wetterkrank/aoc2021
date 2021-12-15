@@ -24,8 +24,8 @@ class Day15 < AdventDay
         distances[nbr] = [distances[nbr], distance].min # update distance for each if it's smaller than recorded
       end
 
-      next_node = queue.min_by { |k| distances[k] } # select node with the smallest distance from the queue
       queue.delete(current)
+      next_node = queue.min_by { |k| distances[k] } # select node with the smallest distance from the queue
       current = next_node
     end
     distances[target]

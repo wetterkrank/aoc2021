@@ -26,6 +26,10 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 - Got tripped by Ruby's negative array indices (expected `nil`)
 - And (more than once) by counting the previously visited cells in a recursive walkaround
 
+#### [Day 22: Reactor Reboot](https://adventofcode.com/2021/day/22)
+- http://twocentstudios.com/2016/08/16/calculating-the-area-of-multiple-intersecting-rectangles-with-swift/
+- https://www.reddit.com/r/dailyprogrammer/comments/zaa0v/9032012_challenge_95_difficult_overlapping/
+
 ## Running the code
 
 - Run `bundle install` to install dependencies

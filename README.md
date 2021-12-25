@@ -1,5 +1,5 @@
 # advent-of-code-2021
-My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Thanks to [`@Aquaj`](https://github.com/Aquaj) for the handy Ruby framework.
+My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions.
 
 ## Notes to self
 
@@ -26,9 +26,17 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 - Got tripped by Ruby's negative array indices (expected `nil`)
 - And (more than once) by counting the previously visited cells in a recursive walkaround
 
+#### [Day 11: Dumbo Octopus](https://adventofcode.com/2021/day/11)
+- Remembered that using [x, y] for a hash containing grid elements is often more convenient than [x][y]
+
+#### [Day 15: Chiton](https://adventofcode.com/2021/day/15)
+- Looked up the "shortest path in a graph" and found [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+- However, it wasn't enough for the 2nd part (250k cells). A simple optimization also described in the Wikipedia article (adding neighbour cells into the queue as we progress and removing them after the visit) helped.
+- Haven't tried [A*](https://en.wikipedia.org/wiki/A*_search_algorithm), maybe for smth else!
+
 #### [Day 22: Reactor Reboot](https://adventofcode.com/2021/day/22)
 - http://twocentstudios.com/2016/08/16/calculating-the-area-of-multiple-intersecting-rectangles-with-swift/
-- https://www.reddit.com/r/dailyprogrammer/comments/zaa0v/9032012_challenge_95_difficult_overlapping/
+- For the recursive solution, the order in which we process cubes is important
 
 ## Running the code
 
@@ -36,3 +44,5 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions. Tha
 - `ruby day-<number>.rb`
 - The input data is stored in `/inputs` directory. If there's no input and the session cookie is provided through the SESSION env var — the framework will
 fetch the input from the AoC website on the first run.
+
+Thanks to [`@Aquaj`](https://github.com/Aquaj) for the handy Ruby framework!

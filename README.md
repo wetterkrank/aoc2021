@@ -30,8 +30,8 @@ My [Advent of Code 2021 🎄](https://adventofcode.com/year/2021) solutions.
 - Remembered that using [x, y] for a hash containing grid elements is often more convenient than [x][y]
 
 #### [Day 15: Chiton](https://adventofcode.com/2021/day/15)
-- This day I discovered [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) 🧐
-- However, it wasn't enough for the 2nd part (250k cells). A simple optimization also described in the Wikipedia article (adding neighbour cells into the queue as we progress and removing them after the visit) helped.
+- That day I discovered [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) 🧐
+- However, the basic version wasn't enough for the 2nd part (250k cells). An optimization also described in the Wikipedia article (adding neighbour cells into the queue as we progress and removing them after the visit) helped.
 - Haven't tried [A*](https://en.wikipedia.org/wiki/A*_search_algorithm), maybe for smth else!
 
 #### [Day 22: Reactor Reboot](https://adventofcode.com/2021/day/22)

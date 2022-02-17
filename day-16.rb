@@ -1,72 +1,108 @@
 require_relative 'common'
 
+OPS = {
+  0 => ->(a, b) { a + b},
+  1 => ->(a, b) { a * b},
+  2 => ->(a, b) { [a, b].min },
+  3 => ->(a, b) { [a, b].max },
+  4 => ->(a, _) { a },
+  5 => ->(a, b) { a > b ? 1 : 0 },
+  6 => ->(a, b) { a < b ? 1 : 0 },
+  7 => ->(a, b) { a == b ? 1 : 0 }
+}
+
 class Day16 < AdventDay
   def first_part
-    message = hex2bin(input)
-
-    puts "Input: #{message}"
-    puts "Total bits: #{message.length}"
-
-    packets = parse(message)
-    packets.reduce(0) { |acc, elem| acc + elem[:version] }
+    packets = Parser.new(input).parse
+    Walker.walk(packets, ->(packet) { packet[:version] }, ->(versions) { versions.reduce(:+) })
   end
   
   def second_part
+    # packets = Parser.new(input).parse
+    # grabr = ->(packet) { packet[:contents] if packet[:contents].is_a? Array }
+    # procesr = ->(packet, values) { 
+    #   type = packet[:type]
+    #   values.reduce { |acc, elem| OPS[type] } 
+    # }
   end
   
   private
-  
-  def parse(msg, head = 0, packets = nil, bits = nil, stack = [])
-    return stack if head + 6 >= msg.length
-    
-    print "Head: #{head} -> "
-    version, type, head = get_prefix(msg, head)
-    print "version: #{version}, type: #{type.to_s(2)}\n"
 
-    if type == 4 # literal
-      head = skip_literal(msg, head)
-    else
-      packets, bits, head = get_length(msg, head)
-    end
-
-    stack << { version: version, type: type, packets: packets, bits: bits }
-    parse(msg, head, packets, bits, stack)
-  end
-
-  def skip_literal(str, head)
-    head += 5 until str[head] == '0'
-    head + 5
-  end
-
-  def get_length(str, head)
-    mode = str[head]
-    head += 1
-    if mode == '0'
-      packets = nil
-      bits = str[head..head + 15].to_i(2)
-      head += 15
-    else
-      bits = nil
-      packets = str[head..head + 11].to_i(2)
-      head += 11
-    end
-    [packets, bits, head]
-  end
-
-  # converts hex string to bin string with 0-padding
-  def hex2bin(str)
+  # convert hex to bin string with 0-padding to a divisible by 4
+  def convert_data(data)
+    str = super.first
     str.hex.to_s(2).rjust(str.length * 4, '0')
   end
+end
 
-  def get_prefix(str, head)
-    version = str[head..head + 2].to_i(2)
-    type = str[head + 3..head + 5].to_i(2)
-    [version, type, head + 6]
+class Parser
+  def initialize(str)
+    puts "Input: #{str}"
+    puts "Total bits: #{str.length}"
+
+    @message = str
+    @pos = 0
   end
 
-  def convert_data(data)
-    super.first
+  def parse
+    return if @pos + 6 >= @message.length # is it even needed?
+
+    print "Pos: #{@pos} -> "
+    version = read(3)
+    type = read(3)
+    print "version: #{version}, type: #{type}\n"
+
+    # if type == 4, we grab the literal and return it right away
+    return { version: version, type: type, contents: read_blocks } if type == 4
+
+    subpackets = []
+    mode = read(1)
+    if mode.zero?
+      # We need to return an unknown number of packets
+      # Let's keep pushing them into an array until we reach @pos + length
+      length = read(15)
+      stop_pos = @pos + length
+      subpackets << parse while @pos < stop_pos
+    else
+      length = read(11)
+      # We need to return an array with <length> packets
+      subpackets = length.times.map { parse }
+    end
+
+    { version: version, type: type, contents: subpackets }
+  end
+
+  private
+
+  # read <count> bits, update the cursor
+  def read(count, as_binary: false)
+    str = @message[@pos...@pos + count]
+    @pos += count
+    as_binary ? str : str.to_i(2)
+  end
+
+  # read literals
+  def read_blocks
+    str = ''
+    loop do
+      block = read(5, as_binary: true)
+      str += block[1..]
+      break if block[0] == '0'
+    end
+    str.to_i(2)
   end
 end
+
+module Walker
+  def self.walk(node, grabr, processr)
+    children = node[:contents]
+    return grabr&.call(node) unless children.is_a? Array
+
+    current = [grabr&.call(node)].compact
+    further = children.map { |child| walk(child, grabr, processr) }
+    processr&.call(current + further)
+  end
+end
+
 
 Day16.solve

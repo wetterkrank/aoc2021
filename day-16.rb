@@ -1,8 +1,11 @@
+# https://adventofcode.com/2021/day/16
+# Packet Decoder -- parsing a string
+
 require_relative 'common'
 
 OPS = {
-  0 => ->(a, b) { a + b},
-  1 => ->(a, b) { a * b},
+  0 => ->(a, b) { a + b },
+  1 => ->(a, b) { a * b },
   2 => ->(a, b) { [a, b].min },
   3 => ->(a, b) { [a, b].max },
   4 => ->(a, _) { a },
@@ -13,22 +16,35 @@ OPS = {
 
 class Day16 < AdventDay
   def first_part
+    counter = lambda {
+      sum = 0
+      ->(packet, _) { sum += packet[:version] }
+    }
     packets = Parser.new(input).parse
-    Walker.walk(packets, ->(packet) { packet[:version] }, ->(versions) { versions.reduce(:+) })
+    walk(packets, counter.call)
   end
   
   def second_part
-    # packets = Parser.new(input).parse
-    # grabr = ->(packet) { packet[:contents] if packet[:contents].is_a? Array }
-    # procesr = ->(packet, values) { 
-    #   type = packet[:type]
-    #   values.reduce { |acc, elem| OPS[type] } 
-    # }
+    packets = Parser.new(input).parse
+    action = lambda { |packet, values| 
+      type = packet[:type]
+      values.reduce { |acc, elem| OPS[type].call(acc, elem) } 
+    }
+    walk(packets, action)
   end
   
   private
 
-  # convert hex to bin string with 0-padding to a divisible by 4
+  # Walk the hash tree with the supplied fn
+  def walk(node, action)
+    children = node[:contents]
+    return action&.call(node, [children]) unless children.is_a? Array
+
+    contents = children.map { |child| walk(child, action) }
+    action&.call(node, contents)
+  end
+
+  # Convert hex to bin string; pad with 0s to a length divisible by 4
   def convert_data(data)
     str = super.first
     str.hex.to_s(2).rjust(str.length * 4, '0')
@@ -37,51 +53,39 @@ end
 
 class Parser
   def initialize(str)
-    puts "Input: #{str}"
-    puts "Total bits: #{str.length}"
-
     @message = str
     @pos = 0
   end
 
   def parse
-    return if @pos + 6 >= @message.length # is it even needed?
-
-    print "Pos: #{@pos} -> "
     version = read(3)
     type = read(3)
-    print "version: #{version}, type: #{type}\n"
-
-    # if type == 4, we grab the literal and return it right away
+    # If type == 4, we grab the literal and return it right away
     return { version: version, type: type, contents: read_blocks } if type == 4
 
     subpackets = []
-    mode = read(1)
-    if mode.zero?
+    if read(1).zero?
       # We need to return an unknown number of packets
-      # Let's keep pushing them into an array until we reach @pos + length
-      length = read(15)
-      stop_pos = @pos + length
+      # Keep pushing them into an array until we reach @pos + length
+      stop_pos = @pos + read(15)
       subpackets << parse while @pos < stop_pos
     else
-      length = read(11)
-      # We need to return an array with <length> packets
-      subpackets = length.times.map { parse }
+      # We need to return an array with _length_ packets
+      subpackets = read(11).times.map { parse }
     end
-
     { version: version, type: type, contents: subpackets }
   end
 
   private
 
-  # read <count> bits, update the cursor
+  # Read _count_ bits, update the cursor
   def read(count, as_binary: false)
     str = @message[@pos...@pos + count]
     @pos += count
     as_binary ? str : str.to_i(2)
   end
 
-  # read literals
+  # Read literal blocks
   def read_blocks
     str = ''
     loop do
@@ -92,17 +96,5 @@ class Parser
     str.to_i(2)
   end
 end
-
-module Walker
-  def self.walk(node, grabr, processr)
-    children = node[:contents]
-    return grabr&.call(node) unless children.is_a? Array
-
-    current = [grabr&.call(node)].compact
-    further = children.map { |child| walk(child, grabr, processr) }
-    processr&.call(current + further)
-  end
-end
-
 
 Day16.solve
